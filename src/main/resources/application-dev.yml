@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/invernadero
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
+jwt:
+  secret: Znfc8uGSMPo28/dDGxze38e/0WuCEsZR+gXxSBdVlXw=
