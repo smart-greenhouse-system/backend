@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 
-public class RegistroEvento {
+public class Evento {
     private String origen;
     private String tipo;
     private String mensaje;

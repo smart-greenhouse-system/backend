@@ -1,7 +1,7 @@
 package com.proyectosu.invernadero.domain.ports;
 
-import com.proyectosu.invernadero.domain.model.prueba.RegistroEvento;
+import com.proyectosu.invernadero.domain.model.prueba.Evento;
 
-public interface RegistroEventoRepositoryPort {
-    void guardar(RegistroEvento evento);
+public interface EventoRepositoryPort {
+    void guardar(Evento evento);
 }
