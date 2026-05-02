@@ -2,7 +2,7 @@ package com.proyectosu.invernadero.infraestructure.adapters;
 
 import com.proyectosu.invernadero.domain.model.auth.Role;
 import com.proyectosu.invernadero.domain.ports.RoleRepositoryPort;
-import com.proyectosu.invernadero.infraestructure.persistence.mapper.RoleMapper;
+import com.proyectosu.invernadero.infraestructure.persistenceRel.mapper.RoleMapper;
 import com.proyectosu.invernadero.infraestructure.repository.RoleJpaRepository;
 import org.springframework.stereotype.Component;
 

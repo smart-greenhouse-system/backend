@@ -3,7 +3,7 @@ package com.proyectosu.invernadero.infraestructure.adapters;
 import com.proyectosu.invernadero.domain.model.auth.User;
 import com.proyectosu.invernadero.domain.ports.UserRepositoryPort;
 import com.proyectosu.invernadero.infraestructure.entity.UserEntity;
-import com.proyectosu.invernadero.infraestructure.persistence.mapper.UserMapper;
+import com.proyectosu.invernadero.infraestructure.persistenceRel.mapper.UserMapper;
 import com.proyectosu.invernadero.infraestructure.repository.UserJpaRepository;
 import org.springframework.stereotype.Component;
 

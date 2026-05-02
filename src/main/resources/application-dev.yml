@@ -4,5 +4,14 @@ spring:
     username: ${DB_USER}
     password: ${DB_PASSWORD}
 
+  mongodb:
+      uri: mongodb://localhost:27017/invernadero
+
+
 jwt:
   secret: Znfc8uGSMPo28/dDGxze38e/0WuCEsZR+gXxSBdVlXw=
+
+mqtt:
+  url: tcp://localhost:1883
+  client-id: backend-invernadero
+  topic-in: iot/#
