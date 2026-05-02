@@ -1,6 +1,6 @@
-package com.proyectosu.invernadero.infraestructure.repository;
+package com.proyectosu.invernadero.infraestructure.persistencerel.repository;
 
-import com.proyectosu.invernadero.infraestructure.entity.RoleEntity;
+import com.proyectosu.invernadero.infraestructure.persistencerel.entity.RoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

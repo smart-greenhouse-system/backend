@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.infraestructure.security;
+package com.proyectosu.invernadero.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

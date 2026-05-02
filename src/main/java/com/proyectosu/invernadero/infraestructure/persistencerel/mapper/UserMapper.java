@@ -1,8 +1,8 @@
-package com.proyectosu.invernadero.infraestructure.persistence.mapper;
+package com.proyectosu.invernadero.infraestructure.persistencerel.mapper;
 
 import com.proyectosu.invernadero.domain.model.auth.User;
 import com.proyectosu.invernadero.domain.model.auth.enums.UserStatus;
-import com.proyectosu.invernadero.infraestructure.entity.UserEntity;
+import com.proyectosu.invernadero.infraestructure.persistencerel.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -1,11 +1,9 @@
 package com.proyectosu.invernadero.config;
 
+import com.proyectosu.invernadero.application.usecase.GuardarEventoUseCase;
 import com.proyectosu.invernadero.application.usecase.LoginUserUseCase;
 import com.proyectosu.invernadero.application.usecase.RegisterUserUseCase;
-import com.proyectosu.invernadero.domain.ports.JwtServicePort;
-import com.proyectosu.invernadero.domain.ports.PasswordEncoderPort;
-import com.proyectosu.invernadero.domain.ports.RoleRepositoryPort;
-import com.proyectosu.invernadero.domain.ports.UserRepositoryPort;
+import com.proyectosu.invernadero.domain.ports.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,5 +30,10 @@ public class ApplicationConfig {
                 passwordEncoder,
                 jwtService
         );
+    }
+
+    @Bean
+    public GuardarEventoUseCase guardarEventoUseCase(EventoRepositoryPort  eventoRepositoryPort) {
+       return new GuardarEventoUseCase(eventoRepositoryPort);
     }
 }

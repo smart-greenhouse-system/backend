@@ -1,7 +1,7 @@
-package com.proyectosu.invernadero.infraestructure.persistence.mapper;
+package com.proyectosu.invernadero.infraestructure.persistencerel.mapper;
 
 import com.proyectosu.invernadero.domain.model.auth.Role;
-import com.proyectosu.invernadero.infraestructure.entity.RoleEntity;
+import com.proyectosu.invernadero.infraestructure.persistencerel.entity.RoleEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

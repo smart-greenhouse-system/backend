@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.infraestructure.security;
+package com.proyectosu.invernadero.config.security;
 
 import com.proyectosu.invernadero.domain.ports.JwtServicePort;
 import jakarta.servlet.FilterChain;

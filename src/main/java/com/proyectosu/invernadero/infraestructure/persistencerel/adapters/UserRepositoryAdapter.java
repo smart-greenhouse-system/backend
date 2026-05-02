@@ -1,10 +1,10 @@
-package com.proyectosu.invernadero.infraestructure.adapters;
+package com.proyectosu.invernadero.infraestructure.persistencerel.adapters;
 
 import com.proyectosu.invernadero.domain.model.auth.User;
 import com.proyectosu.invernadero.domain.ports.UserRepositoryPort;
-import com.proyectosu.invernadero.infraestructure.entity.UserEntity;
-import com.proyectosu.invernadero.infraestructure.persistenceRel.mapper.UserMapper;
-import com.proyectosu.invernadero.infraestructure.repository.UserJpaRepository;
+import com.proyectosu.invernadero.infraestructure.persistencerel.entity.UserEntity;
+import com.proyectosu.invernadero.infraestructure.persistencerel.mapper.UserMapper;
+import com.proyectosu.invernadero.infraestructure.persistencerel.repository.UserJpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

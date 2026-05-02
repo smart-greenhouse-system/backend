@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.infraestructure.entity;
+package com.proyectosu.invernadero.infraestructure.persistencerel.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
