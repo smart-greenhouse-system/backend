@@ -1,4 +1,7 @@
 package com.proyectosu.invernadero.infraestructure.persistencenorel.repository;
 
-public interface EventoMongoRepository {
+import com.proyectosu.invernadero.infraestructure.persistencenorel.document.EventoDocument;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface EventoMongoRepository extends MongoRepository<EventoDocument, String> {
 }

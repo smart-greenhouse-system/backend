@@ -1,10 +1,15 @@
-package com.proyectosu.invernadero.infraestructure.persistencenorel.collections;
+package com.proyectosu.invernadero.infraestructure.persistencenorel.document;
 
-import jakarta.persistence.Id;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "eventos")
-
+@Getter
+@AllArgsConstructor
 public class EventoDocument {
     @Id
     private String id;
