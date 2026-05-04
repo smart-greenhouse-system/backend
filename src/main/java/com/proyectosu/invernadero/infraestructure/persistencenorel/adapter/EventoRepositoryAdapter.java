@@ -8,6 +8,8 @@ import com.proyectosu.invernadero.infraestructure.persistencenorel.repository.Ev
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class EventoRepositoryAdapter implements EventoRepositoryPort {
@@ -19,5 +21,13 @@ public class EventoRepositoryAdapter implements EventoRepositoryPort {
     public void guardar(Evento evento) {
         EventoDocument document = mapper.toDocument(evento);
         repository.save(document);
+    }
+
+    @Override
+    public List<Evento> obtenerTodos() {
+        return repository.findAll()
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
     }
 }
