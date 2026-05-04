@@ -36,11 +36,6 @@ public class MqttConfig {
 
         return factory;
     }
-
-    @Bean
-    public MessageChannel mqttOutboundChannel() {
-        return new DirectChannel();
-    }
 }
 
 
