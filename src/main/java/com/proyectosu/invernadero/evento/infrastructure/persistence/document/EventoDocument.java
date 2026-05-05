@@ -1,9 +1,8 @@
-package com.proyectosu.invernadero.auth.infraestructure.persistencenorel.document;
+package com.proyectosu.invernadero.evento.infrastructure.persistence.document;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

@@ -1,10 +1,10 @@
-package com.proyectosu.invernadero.auth.infraestructure.persistencenorel.adapter;
+package com.proyectosu.invernadero.evento.infrastructure.persistence.adapter;
 
 import com.proyectosu.invernadero.evento.domain.Evento;
 import com.proyectosu.invernadero.evento.domain.ports.EventoRepositoryPort;
-import com.proyectosu.invernadero.auth.infraestructure.persistencenorel.document.EventoDocument;
-import com.proyectosu.invernadero.auth.infraestructure.persistencenorel.mapper.EventoMapper;
-import com.proyectosu.invernadero.auth.infraestructure.persistencenorel.repository.EventoMongoRepository;
+import com.proyectosu.invernadero.evento.infrastructure.persistence.document.EventoDocument;
+import com.proyectosu.invernadero.evento.infrastructure.persistence.mapper.EventoMapper;
+import com.proyectosu.invernadero.evento.infrastructure.persistence.repository.EventoMongoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

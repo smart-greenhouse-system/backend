@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.auth.infraestructure.persistencenorel.mapper;
+package com.proyectosu.invernadero.evento.infrastructure.persistence.mapper;
 
 import com.proyectosu.invernadero.evento.domain.Evento;
 import com.proyectosu.invernadero.evento.infrastructure.persistence.document.EventoDocument;

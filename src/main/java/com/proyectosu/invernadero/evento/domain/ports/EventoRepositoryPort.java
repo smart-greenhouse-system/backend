@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.auth.domain.ports;
+package com.proyectosu.invernadero.evento.domain.ports;
 
 import com.proyectosu.invernadero.evento.domain.Evento;
 

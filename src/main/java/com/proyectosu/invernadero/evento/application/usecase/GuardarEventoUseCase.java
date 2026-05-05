@@ -1,7 +1,7 @@
-package com.proyectosu.invernadero.auth.application.usecase;
+package com.proyectosu.invernadero.evento.application.usecase;
 
-import com.proyectosu.invernadero.auth.domain.model.prueba.Evento;
-import com.proyectosu.invernadero.auth.domain.ports.EventoRepositoryPort;
+import com.proyectosu.invernadero.evento.domain.Evento;
+import com.proyectosu.invernadero.evento.domain.ports.EventoRepositoryPort;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

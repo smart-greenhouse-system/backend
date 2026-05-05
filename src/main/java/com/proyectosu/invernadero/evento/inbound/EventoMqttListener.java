@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.rest.mqtt;
+package com.proyectosu.invernadero.evento.inbound;
 
 import com.proyectosu.invernadero.evento.application.usecase.GuardarEventoUseCase;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,5 @@ public class EventoMqttListener {
             );
         }
 
-        System.out.println("Topic: " + topic);
-        System.out.println("Payload: " + payload);
     }
 }

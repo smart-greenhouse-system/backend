@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero;
+package com.proyectosu.invernadero.evento.infrastructure.mqtt;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.integration.support.MessageBuilder;

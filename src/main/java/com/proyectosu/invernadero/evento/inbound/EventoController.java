@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.rest.controller;
+package com.proyectosu.invernadero.evento.inbound;
 
 import com.proyectosu.invernadero.evento.application.usecase.GuardarEventoUseCase;
 import com.proyectosu.invernadero.evento.application.usecase.ObtenerEventosUseCase;
@@ -6,7 +6,7 @@ import com.proyectosu.invernadero.evento.infrastructure.mqtt.MqttPublisherAdapte
 import com.proyectosu.invernadero.evento.dto.request.EventoRequest;
 import com.proyectosu.invernadero.evento.dto.response.EventoResponse;
 import com.proyectosu.invernadero.evento.infrastructure.mqtt.EventoMqttMapper;
-import com.proyectosu.invernadero.rest.mapper.EventoResponseMapper;
+import com.proyectosu.invernadero.evento.infrastructure.persistence.mapper.EventoResponseMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

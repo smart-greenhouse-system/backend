@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.rest.mapper;
+package com.proyectosu.invernadero.evento.infrastructure.mqtt;
 
 import com.proyectosu.invernadero.evento.dto.response.EventoMqttPayload;
 import org.mapstruct.Mapper;
