@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.shared.config.errores;
+package com.proyectosu.invernadero.shared.errores;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;

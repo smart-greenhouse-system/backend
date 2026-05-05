@@ -1,6 +1,6 @@
 package com.proyectosu.invernadero.shared.security;
 
-import com.proyectosu.invernadero.domain.ports.JwtServicePort;
+import com.proyectosu.invernadero.auth.domain.ports.JwtServicePort;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

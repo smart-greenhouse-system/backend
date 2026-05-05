@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.shared.mqtt;
+package com.proyectosu.invernadero.shared.config.mqtt;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

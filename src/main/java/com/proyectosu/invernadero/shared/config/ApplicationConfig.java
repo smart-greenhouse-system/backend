@@ -1,10 +1,11 @@
-package com.proyectosu.invernadero.config;
+package com.proyectosu.invernadero.shared.config;
 
-import com.proyectosu.invernadero.application.usecase.GuardarEventoUseCase;
-import com.proyectosu.invernadero.application.usecase.LoginUserUseCase;
-import com.proyectosu.invernadero.application.usecase.ObtenerEventosUseCase;
-import com.proyectosu.invernadero.application.usecase.RegisterUserUseCase;
-import com.proyectosu.invernadero.domain.ports.*;
+import com.proyectosu.invernadero.evento.application.usecase.GuardarEventoUseCase;
+import com.proyectosu.invernadero.auth.application.usecase.LoginUserUseCase;
+import com.proyectosu.invernadero.evento.application.usecase.ObtenerEventosUseCase;
+import com.proyectosu.invernadero.auth.application.usecase.RegisterUserUseCase;
+import com.proyectosu.invernadero.auth.domain.ports.*;
+import com.proyectosu.invernadero.evento.domain.ports.EventoRepositoryPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -34,7 +35,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public GuardarEventoUseCase guardarEventoUseCase(EventoRepositoryPort  eventoRepositoryPort) {
+    public GuardarEventoUseCase guardarEventoUseCase(EventoRepositoryPort eventoRepositoryPort) {
        return new GuardarEventoUseCase(eventoRepositoryPort);
     }
 

@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.shared.mqtt;
+package com.proyectosu.invernadero.shared.config.mqtt;
 
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Value;
