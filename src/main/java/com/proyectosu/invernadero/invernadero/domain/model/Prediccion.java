@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.auth.domain.model;
+package com.proyectosu.invernadero.invernadero.domain.model;
 
 import lombok.Getter;
 

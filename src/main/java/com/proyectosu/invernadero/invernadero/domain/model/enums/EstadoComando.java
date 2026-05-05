@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.auth.domain.model.enums;
+package com.proyectosu.invernadero.invernadero.domain.model.enums;
 
 public enum EstadoComando {
     PENDIENTE,

@@ -1,6 +1,6 @@
-package com.proyectosu.invernadero.auth.domain.model;
+package com.proyectosu.invernadero.invernadero.domain.model;
 
-import com.proyectosu.invernadero.auth.domain.model.enums.EstadoComando;
+import com.proyectosu.invernadero.invernadero.domain.model.enums.EstadoComando;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
