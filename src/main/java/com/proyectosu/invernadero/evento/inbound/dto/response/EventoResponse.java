@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.evento.dto.response;
+package com.proyectosu.invernadero.evento.inbound.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

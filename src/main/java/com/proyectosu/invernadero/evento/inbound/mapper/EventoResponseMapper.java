@@ -1,7 +1,7 @@
-package com.proyectosu.invernadero.evento.infrastructure.persistence.mapper;
+package com.proyectosu.invernadero.evento.inbound.mapper;
 
 import com.proyectosu.invernadero.evento.domain.Evento;
-import com.proyectosu.invernadero.evento.dto.response.EventoResponse;
+import com.proyectosu.invernadero.evento.inbound.dto.response.EventoResponse;
 import org.mapstruct.Mapper;
 
 import java.util.List;
