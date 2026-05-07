@@ -9,10 +9,11 @@ public class GuardarEventoUseCase {
 
     private final EventoRepositoryPort eventoRepositoryPort;
 
-    public void ejecutar(String origen, String tipo, String mensaje) {
+    public Evento ejecutar(String origen, String tipo, String mensaje) {
 
         Evento evento = new Evento(origen, tipo, mensaje);
-        eventoRepositoryPort.guardar(evento);
+
+        return eventoRepositoryPort.guardar(evento);
 
     }
 }

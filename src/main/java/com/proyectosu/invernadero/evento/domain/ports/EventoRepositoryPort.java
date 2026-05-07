@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface EventoRepositoryPort {
 
-    void guardar(Evento evento);
+    Evento guardar(Evento evento);
 
     List<Evento> obtenerTodos();
 }

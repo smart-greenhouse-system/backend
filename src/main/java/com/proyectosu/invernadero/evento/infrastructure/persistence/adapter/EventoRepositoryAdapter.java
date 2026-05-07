@@ -18,9 +18,9 @@ public class EventoRepositoryAdapter implements EventoRepositoryPort {
     private final EventoMapper mapper;
 
     @Override
-    public void guardar(Evento evento) {
+    public Evento guardar(Evento evento) {
         EventoDocument document = mapper.toDocument(evento);
-        repository.save(document);
+        return mapper.toDomain(repository.save(document));
     }
 
     @Override
