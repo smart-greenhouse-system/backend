@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.evento.dto.request;
+package com.proyectosu.invernadero.evento.inbound.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
