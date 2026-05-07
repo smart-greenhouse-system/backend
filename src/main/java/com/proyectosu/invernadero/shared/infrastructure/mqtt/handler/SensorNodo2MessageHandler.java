@@ -4,9 +4,12 @@ import org.springframework.stereotype.Component;
 import tools.jackson.databind.JsonNode;
 
 @Component
-public class SensorMessageHandler {
+public class SensorNodo2MessageHandler {
 
     public void handle(String topic, JsonNode payload){
-
+        // Aquí debe ir:
+        // payload → DTO
+        // UseCase
+        // lógica de comandos
     }
 }
