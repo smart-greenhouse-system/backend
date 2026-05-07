@@ -4,15 +4,18 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
-import org.springframework.messaging.MessageChannel;
 
 @Configuration
 public class MqttConfig {
 
     @Value("${mqtt.url}")
     private String brokerUrl;
+    @Value("${mqtt.username}")
+    private String username;
+
+    @Value("${mqtt.password}")
+    private String password;
 
     @Bean
     public MqttConnectOptions mqttConnectOptions() {
@@ -20,8 +23,11 @@ public class MqttConfig {
         MqttConnectOptions options = new MqttConnectOptions();
 
         options.setServerURIs(new String[]{brokerUrl});
+        options.setUserName(username);
+        options.setPassword(password.toCharArray());
+
         options.setAutomaticReconnect(true);
-        options.setCleanSession(true);
+        options.setCleanSession(false);
         options.setConnectionTimeout(10);
 
         return options;
@@ -29,6 +35,7 @@ public class MqttConfig {
 
     @Bean
     public DefaultMqttPahoClientFactory mqttClientFactory() {
+
         DefaultMqttPahoClientFactory factory =
                 new DefaultMqttPahoClientFactory();
 

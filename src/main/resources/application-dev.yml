@@ -12,6 +12,8 @@ jwt:
   secret: Znfc8uGSMPo28/dDGxze38e/0WuCEsZR+gXxSBdVlXw=
 
 mqtt:
-  url: tcp://localhost:1883
+  url: ssl://p9471c80.ala.us-east-1.emqxsl.com:8883
   client-id: backend-invernadero
-  topic-in: iot/#
+  username: test
+  password: test123
+  topic-in: invernadero/#
