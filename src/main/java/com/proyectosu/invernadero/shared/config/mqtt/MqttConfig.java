@@ -6,29 +6,38 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 
+import javax.net.ssl.SSLSocketFactory;
+
 @Configuration
 public class MqttConfig {
 
-    @Value("${mqtt.url}")
-    private String brokerUrl;
+    @Value("${mqtt.host}")
+    private String host;
+
+    @Value("${mqtt.port}")
+    private int port;
+
     @Value("${mqtt.username}")
     private String username;
 
     @Value("${mqtt.password}")
     private String password;
 
+    @Value("${mqtt.clientId}")
+    private String clientId;
+
     @Bean
     public MqttConnectOptions mqttConnectOptions() {
 
         MqttConnectOptions options = new MqttConnectOptions();
 
-        options.setServerURIs(new String[]{brokerUrl});
+        options.setServerURIs(new String[]{host + ":" + port});
         options.setUserName(username);
         options.setPassword(password.toCharArray());
+        options.setSocketFactory((SSLSocketFactory) SSLSocketFactory.getDefault());
 
         options.setAutomaticReconnect(true);
-        options.setCleanSession(false);
-        options.setConnectionTimeout(10);
+        options.setCleanSession(true);
 
         return options;
     }
