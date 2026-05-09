@@ -1,9 +1,9 @@
 package com.proyectosu.invernadero.shared.infrastructure.mqtt.handler;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.ObjectMapper;
 
 @RequiredArgsConstructor
 @Component
