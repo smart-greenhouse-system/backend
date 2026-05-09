@@ -2,10 +2,18 @@ package com.proyectosu.invernadero.mqtt.inbound;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.proyectosu.invernadero.mqtt.application.usecase.GuardarEstadoActuadorUseCase;
+import com.proyectosu.invernadero.mqtt.application.usecase.GuardarImagenCamUseCase;
+import com.proyectosu.invernadero.mqtt.application.usecase.GuardarSensorNodo1UseCase;
+import com.proyectosu.invernadero.mqtt.application.usecase.GuardarSensorNodo2UseCase;
 import com.proyectosu.invernadero.mqtt.inbound.dto.request.EstadoActuadorRequest;
 import com.proyectosu.invernadero.mqtt.inbound.dto.request.ImagenCamRequest;
 import com.proyectosu.invernadero.mqtt.inbound.dto.request.SensorNodo1Request;
 import com.proyectosu.invernadero.mqtt.inbound.dto.request.SensorNodo2Request;
+import com.proyectosu.invernadero.mqtt.inbound.mapper.EstadoActuadorInboundMapper;
+import com.proyectosu.invernadero.mqtt.inbound.mapper.ImagenCamInboundMapper;
+import com.proyectosu.invernadero.mqtt.inbound.mapper.SensorNodo1InboundMapper;
+import com.proyectosu.invernadero.mqtt.inbound.mapper.SensorNodo2InboundMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +37,14 @@ public class MqttListenerAdapter {
 
     private final ObjectMapper objectMapper;
     private final MqttPahoMessageDrivenChannelAdapter inbound;
+    private final GuardarSensorNodo1UseCase guardarSensorNodo1UseCase;
+    private final GuardarSensorNodo2UseCase guardarSensorNodo2UseCase;
+    private final GuardarEstadoActuadorUseCase guardarEstadoActuadorUseCase;
+    private final GuardarImagenCamUseCase guardarImagenCamUseCase;
+    private final SensorNodo1InboundMapper sensorNodo1InboundMapper;
+    private final SensorNodo2InboundMapper sensorNodo2InboundMapper;
+    private final EstadoActuadorInboundMapper estadoActuadorInboundMapper;
+    private final ImagenCamInboundMapper imagenCamInboundMapper;
 
     @PostConstruct
     public void suscribirTopics() {
@@ -77,18 +93,38 @@ public class MqttListenerAdapter {
     }
 
     private void handleNodo1(SensorNodo1Request request) {
-        log.info("Mensaje nodo1 sensores recibido: {}", request);
+        try {
+            log.info("Mensaje nodo1 sensores recibido: {}", request);
+            guardarSensorNodo1UseCase.ejecutar(sensorNodo1InboundMapper.toDomain(request));
+        } catch (Exception e) {
+            log.error("Error procesando datos de nodo1 sensores. request={}", request, e);
+        }
     }
 
     private void handleNodo2(SensorNodo2Request request) {
-        log.info("Mensaje nodo2 sensores recibido: {}", request);
+        try {
+            log.info("Mensaje nodo2 sensores recibido: {}", request);
+            guardarSensorNodo2UseCase.ejecutar(sensorNodo2InboundMapper.toDomain(request));
+        } catch (Exception e) {
+            log.error("Error procesando datos de nodo2 sensores. request={}", request, e);
+        }
     }
 
     private void handleImagen(ImagenCamRequest request) {
-        log.info("Imagen camara recibida: {}", request);
+        try {
+            log.info("Imagen camara recibida: {}", request);
+            guardarImagenCamUseCase.ejecutar(imagenCamInboundMapper.toDomain(request));
+        } catch (Exception e) {
+            log.error("Error procesando imagen de camara. request={}", request, e);
+        }
     }
 
     private void handleEstadoActuador(EstadoActuadorRequest request) {
-        log.info("Estado de actuador recibido: {}", request);
+        try {
+            log.info("Estado de actuador recibido: {}", request);
+            guardarEstadoActuadorUseCase.ejecutar(estadoActuadorInboundMapper.toDomain(request));
+        } catch (Exception e) {
+            log.error("Error procesando estado de actuador. request={}", request, e);
+        }
     }
 }
