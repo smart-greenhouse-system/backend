@@ -7,6 +7,8 @@ import com.proyectosu.invernadero.telemetria.infrastructure.persistence.reposito
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -20,5 +22,16 @@ public class MedicionTelemetriaRepositoryAdapter implements MedicionTelemetriaRe
     public Optional<MedicionTelemetria> obtenerUltimaMedicion(String deviceId) {
         return repository.findFirstByDeviceIdOrderByTimestampDesc(deviceId)
                 .map(mapper::toDomain);
+    }
+
+    @Override
+    public List<MedicionTelemetria> obtenerHistorico(String deviceId, Instant from, Instant to, int limit) {
+        return repository.findByDeviceIdOrderByTimestampAsc(deviceId)
+                .stream()
+                .filter(document -> from == null || !document.getTimestamp().isBefore(from))
+                .filter(document -> to == null || !document.getTimestamp().isAfter(to))
+                .limit(limit)
+                .map(mapper::toDomain)
+                .toList();
     }
 }
