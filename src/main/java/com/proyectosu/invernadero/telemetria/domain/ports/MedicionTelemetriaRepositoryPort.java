@@ -16,4 +16,6 @@ public interface MedicionTelemetriaRepositoryPort {
             Instant to,
             int limit
     );
+
+    List<MedicionTelemetria> obtenerListadoPorDispositivo(String deviceId, int limit);
 }

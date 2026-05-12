@@ -34,4 +34,13 @@ public class MedicionTelemetriaRepositoryAdapter implements MedicionTelemetriaRe
                 .map(mapper::toDomain)
                 .toList();
     }
+
+    @Override
+    public List<MedicionTelemetria> obtenerListadoPorDispositivo(String deviceId, int limit) {
+        return repository.findByDeviceIdOrderByTimestampDesc(deviceId)
+                .stream()
+                .limit(limit)
+                .map(mapper::toDomain)
+                .toList();
+    }
 }

@@ -1,5 +1,6 @@
 package com.proyectosu.invernadero.telemetria.inbound.controller;
 
+import com.proyectosu.invernadero.telemetria.application.usecase.ObtenerListadoMedicionesUseCase;
 import com.proyectosu.invernadero.telemetria.application.usecase.ObtenerHistoricoMedicionesUseCase;
 import com.proyectosu.invernadero.telemetria.application.usecase.ObtenerUltimaMedicionUseCase;
 import com.proyectosu.invernadero.telemetria.domain.model.MedicionTelemetria;
@@ -29,6 +30,7 @@ public class TelemetriaController {
 
     private final ObtenerUltimaMedicionUseCase obtenerUltimaMedicionUseCase;
     private final ObtenerHistoricoMedicionesUseCase obtenerHistoricoMedicionesUseCase;
+    private final ObtenerListadoMedicionesUseCase obtenerListadoMedicionesUseCase;
     private final MedicionTelemetriaResponseMapper responseMapper;
 
     @GetMapping("/{device_id}/measurements/latest")
@@ -76,6 +78,34 @@ public class TelemetriaController {
 
         List<MedicionTelemetriaResponse> readings = obtenerHistoricoMedicionesUseCase
                 .ejecutar(normalizedDeviceId, from, to, limit)
+                .stream()
+                .map(responseMapper::toResponse)
+                .toList();
+
+        return ResponseEntity.ok(new HistoricoMedicionesResponse(normalizedDeviceId, readings.size(), readings));
+    }
+
+    @GetMapping("/{device_id}/measurements/list")
+    public ResponseEntity<HistoricoMedicionesResponse> listarMedicionesPorDispositivo(
+            @PathVariable("device_id") String deviceId,
+            @RequestParam(name = "limit", required = false, defaultValue = "100") int limit
+    ) {
+        String normalizedDeviceId = deviceId == null ? "" : deviceId.trim();
+
+        if (normalizedDeviceId.isBlank()) {
+            throw new IllegalArgumentException("El device_id es obligatorio");
+        }
+
+        if (limit < 1) {
+            throw new IllegalArgumentException("El limit debe ser mayor que cero");
+        }
+
+        if (limit > MAX_LIMIT) {
+            throw new IllegalArgumentException("El limit supera el maximo permitido");
+        }
+
+        List<MedicionTelemetriaResponse> readings = obtenerListadoMedicionesUseCase
+                .ejecutar(normalizedDeviceId, limit)
                 .stream()
                 .map(responseMapper::toResponse)
                 .toList();

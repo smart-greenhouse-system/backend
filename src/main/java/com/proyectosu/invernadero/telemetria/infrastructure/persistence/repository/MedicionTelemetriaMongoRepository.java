@@ -11,4 +11,6 @@ public interface MedicionTelemetriaMongoRepository extends MongoRepository<Medic
     Optional<MedicionTelemetriaDocument> findFirstByDeviceIdOrderByTimestampDesc(String deviceId);
 
     List<MedicionTelemetriaDocument> findByDeviceIdOrderByTimestampAsc(String deviceId);
+
+    List<MedicionTelemetriaDocument> findByDeviceIdOrderByTimestampDesc(String deviceId);
 }
