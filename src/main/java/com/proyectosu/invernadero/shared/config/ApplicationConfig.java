@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.proyectosu.invernadero.auth.application.usecase.LoginUserUseCase;
 import com.proyectosu.invernadero.auth.application.usecase.RegisterUserUseCase;
+import com.proyectosu.invernadero.actuators.application.usecase.ExecuteActuatorUseCase;
+import com.proyectosu.invernadero.actuators.domain.ports.ActuatorEventRepositoryPort;
 import com.proyectosu.invernadero.auth.domain.ports.JwtServicePort;
 import com.proyectosu.invernadero.auth.domain.ports.PasswordEncoderPort;
 import com.proyectosu.invernadero.auth.domain.ports.RoleRepositoryPort;
@@ -19,6 +21,8 @@ import com.proyectosu.invernadero.telemetria.application.usecase.ObtenerListadoM
 import com.proyectosu.invernadero.telemetria.application.usecase.ObtenerUltimaMedicionUseCase;
 import com.proyectosu.invernadero.telemetria.application.usecase.RegistrarMedicionUseCase;
 import com.proyectosu.invernadero.telemetria.domain.ports.MedicionTelemetriaRepositoryPort;
+import com.proyectosu.invernadero.shared.domain.ports.MqttPublisherPort;
+import org.springframework.beans.factory.ObjectProvider;
 
 @Configuration
 public class ApplicationConfig {
@@ -60,6 +64,19 @@ public class ApplicationConfig {
             DispositivoRepositoryPort dispositivoRepositoryPort
     ) {
         return new ObtenerDispositivosUseCase(dispositivoRepositoryPort);
+    }
+
+    @Bean
+    public ExecuteActuatorUseCase executeActuatorUseCase(
+            DispositivoRepositoryPort dispositivoRepositoryPort,
+            ActuatorEventRepositoryPort actuatorEventRepositoryPort,
+            ObjectProvider<MqttPublisherPort> mqttPublisherPortProvider
+    ) {
+        return new ExecuteActuatorUseCase(
+                dispositivoRepositoryPort,
+                actuatorEventRepositoryPort,
+                mqttPublisherPortProvider
+        );
     }
 
     @Bean
