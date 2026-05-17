@@ -10,8 +10,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Map;
 
-@Document(collection = "telemetria_mediciones")
+@Document(collection = "sensor_data")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,18 +28,6 @@ public class MedicionTelemetriaDocument {
     @Field("timestamp")
     private Instant timestamp;
 
-    @Field("temperatura")
-    private BigDecimal temperatura;
-
-    @Field("humedad_relativa")
-    private BigDecimal humedadRelativa;
-
-    @Field("humedad_suelo")
-    private BigDecimal humedadSuelo;
-
-    @Field("iluminacion")
-    private BigDecimal iluminacion;
-
-    @Field("co2")
-    private BigDecimal co2;
+    @Field("sensores")
+    private Map<String, BigDecimal> sensores;
 }

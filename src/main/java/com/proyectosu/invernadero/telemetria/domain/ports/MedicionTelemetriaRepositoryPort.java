@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public interface MedicionTelemetriaRepositoryPort {
 
+    MedicionTelemetria guardar(MedicionTelemetria medicion);
+
     Optional<MedicionTelemetria> obtenerUltimaMedicion(String deviceId);
 
     List<MedicionTelemetria> obtenerHistorico(

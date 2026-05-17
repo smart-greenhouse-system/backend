@@ -19,6 +19,11 @@ public class MedicionTelemetriaRepositoryAdapter implements MedicionTelemetriaRe
     private final MedicionTelemetriaMapper mapper;
 
     @Override
+    public MedicionTelemetria guardar(MedicionTelemetria medicion) {
+        return mapper.toDomain(repository.save(mapper.toDocument(medicion)));
+    }
+
+    @Override
     public Optional<MedicionTelemetria> obtenerUltimaMedicion(String deviceId) {
         return repository.findFirstByDeviceIdOrderByTimestampDesc(deviceId)
                 .map(mapper::toDomain);

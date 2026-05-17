@@ -5,15 +5,12 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Map;
 
 @Getter
 @AllArgsConstructor
 public class MedicionTelemetriaResponse {
 
     private Instant timestamp;
-    private BigDecimal temperatura;
-    private BigDecimal humedad_relativa;
-    private BigDecimal humedad_suelo;
-    private BigDecimal iluminacion;
-    private BigDecimal co2;
+    private Map<String, BigDecimal> sensores;
 }
