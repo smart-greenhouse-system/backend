@@ -12,6 +12,8 @@ import com.proyectosu.invernadero.auth.domain.ports.UserRepositoryPort;
 import com.proyectosu.invernadero.evento.application.usecase.GuardarEventoUseCase;
 import com.proyectosu.invernadero.evento.application.usecase.ObtenerEventosUseCase;
 import com.proyectosu.invernadero.evento.domain.ports.EventoRepositoryPort;
+import com.proyectosu.invernadero.devices.application.usecase.ObtenerDispositivosUseCase;
+import com.proyectosu.invernadero.devices.domain.ports.DispositivoRepositoryPort;
 import com.proyectosu.invernadero.telemetria.application.usecase.ObtenerHistoricoMedicionesUseCase;
 import com.proyectosu.invernadero.telemetria.application.usecase.ObtenerListadoMedicionesUseCase;
 import com.proyectosu.invernadero.telemetria.application.usecase.ObtenerUltimaMedicionUseCase;
@@ -51,6 +53,13 @@ public class ApplicationConfig {
     @Bean
     public ObtenerEventosUseCase obtenerEventosUseCase(EventoRepositoryPort eventoRepositoryPort) {
         return new ObtenerEventosUseCase(eventoRepositoryPort);
+    }
+
+    @Bean
+    public ObtenerDispositivosUseCase obtenerDispositivosUseCase(
+            DispositivoRepositoryPort dispositivoRepositoryPort
+    ) {
+        return new ObtenerDispositivosUseCase(dispositivoRepositoryPort);
     }
 
     @Bean
