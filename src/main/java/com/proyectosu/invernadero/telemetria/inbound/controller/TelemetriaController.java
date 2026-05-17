@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/devices")
+@RequestMapping("/api/sensors")
 @RequiredArgsConstructor
 public class TelemetriaController {
 
@@ -33,23 +33,21 @@ public class TelemetriaController {
     private final ObtenerListadoMedicionesUseCase obtenerListadoMedicionesUseCase;
     private final MedicionTelemetriaResponseMapper responseMapper;
 
-    @GetMapping("/{device_id}/measurements/latest")
+    @GetMapping("/latest")
     public ResponseEntity<UltimaMedicionResponse> obtenerUltimaMedicion(
-            @PathVariable("device_id") String deviceId
+            @RequestParam(name = "device_id", required = false) String deviceId
     ) {
-        String normalizedDeviceId = deviceId == null ? "" : deviceId.trim();
-
-        if (normalizedDeviceId.isBlank()) {
-            throw new IllegalArgumentException("El device_id es obligatorio");
-        }
-
-        Optional<MedicionTelemetria> ultimaMedicion = obtenerUltimaMedicionUseCase.ejecutar(normalizedDeviceId);
-        MedicionTelemetriaResponse latest = ultimaMedicion.map(responseMapper::toResponse).orElse(null);
-
-        return ResponseEntity.ok(new UltimaMedicionResponse(normalizedDeviceId, latest));
+        return construirRespuestaUltimaMedicion(normalizeDeviceId(deviceId));
     }
 
-    @GetMapping("/{device_id}/measurements")
+    @GetMapping("/{device_id}/measurements/latest")
+    public ResponseEntity<UltimaMedicionResponse> obtenerUltimaMedicionLegado(
+            @PathVariable("device_id") String deviceId
+    ) {
+        return construirRespuestaUltimaMedicion(normalizeDeviceId(deviceId));
+    }
+
+    @GetMapping("/history/{device_id}")
     public ResponseEntity<HistoricoMedicionesResponse> obtenerHistorico(
             @PathVariable("device_id") String deviceId,
             @RequestParam(name = "from", required = false)
@@ -58,12 +56,42 @@ public class TelemetriaController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant to,
             @RequestParam(name = "limit", required = false, defaultValue = "100") int limit
     ) {
-        String normalizedDeviceId = deviceId == null ? "" : deviceId.trim();
+        return construirRespuestaHistorico(normalizeDeviceId(deviceId), from, to, limit);
+    }
 
-        if (normalizedDeviceId.isBlank()) {
-            throw new IllegalArgumentException("El device_id es obligatorio");
-        }
+    @GetMapping("/{device_id}/measurements")
+    public ResponseEntity<HistoricoMedicionesResponse> obtenerHistoricoLegado(
+            @PathVariable("device_id") String deviceId,
+            @RequestParam(name = "from", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant from,
+            @RequestParam(name = "to", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant to,
+            @RequestParam(name = "limit", required = false, defaultValue = "100") int limit
+    ) {
+        return construirRespuestaHistorico(normalizeDeviceId(deviceId), from, to, limit);
+    }
 
+    @GetMapping("/{device_id}/measurements/list")
+    public ResponseEntity<HistoricoMedicionesResponse> listarMedicionesPorDispositivo(
+            @PathVariable("device_id") String deviceId,
+            @RequestParam(name = "limit", required = false, defaultValue = "100") int limit
+    ) {
+        return construirRespuestaListado(normalizeDeviceId(deviceId), limit);
+    }
+
+    private ResponseEntity<UltimaMedicionResponse> construirRespuestaUltimaMedicion(String normalizedDeviceId) {
+        Optional<MedicionTelemetria> ultimaMedicion = obtenerUltimaMedicionUseCase.ejecutar(normalizedDeviceId);
+        MedicionTelemetriaResponse latest = ultimaMedicion.map(responseMapper::toResponse).orElse(null);
+
+        return ResponseEntity.ok(new UltimaMedicionResponse(normalizedDeviceId, latest));
+    }
+
+    private ResponseEntity<HistoricoMedicionesResponse> construirRespuestaHistorico(
+            String normalizedDeviceId,
+            Instant from,
+            Instant to,
+            int limit
+    ) {
         if (from != null && to != null && from.isAfter(to)) {
             throw new IllegalArgumentException("El rango de fechas no es valido: from no puede ser mayor que to");
         }
@@ -85,17 +113,7 @@ public class TelemetriaController {
         return ResponseEntity.ok(new HistoricoMedicionesResponse(normalizedDeviceId, readings.size(), readings));
     }
 
-    @GetMapping("/{device_id}/measurements/list")
-    public ResponseEntity<HistoricoMedicionesResponse> listarMedicionesPorDispositivo(
-            @PathVariable("device_id") String deviceId,
-            @RequestParam(name = "limit", required = false, defaultValue = "100") int limit
-    ) {
-        String normalizedDeviceId = deviceId == null ? "" : deviceId.trim();
-
-        if (normalizedDeviceId.isBlank()) {
-            throw new IllegalArgumentException("El device_id es obligatorio");
-        }
-
+    private ResponseEntity<HistoricoMedicionesResponse> construirRespuestaListado(String normalizedDeviceId, int limit) {
         if (limit < 1) {
             throw new IllegalArgumentException("El limit debe ser mayor que cero");
         }
@@ -111,5 +129,15 @@ public class TelemetriaController {
                 .toList();
 
         return ResponseEntity.ok(new HistoricoMedicionesResponse(normalizedDeviceId, readings.size(), readings));
+    }
+
+    private String normalizeDeviceId(String deviceId) {
+        String normalizedDeviceId = deviceId == null ? "" : deviceId.trim();
+
+        if (normalizedDeviceId.isBlank()) {
+            throw new IllegalArgumentException("El device_id es obligatorio");
+        }
+
+        return normalizedDeviceId;
     }
 }
