@@ -7,6 +7,8 @@ import com.proyectosu.invernadero.auth.application.usecase.LoginUserUseCase;
 import com.proyectosu.invernadero.auth.application.usecase.RegisterUserUseCase;
 import com.proyectosu.invernadero.actuators.application.usecase.ExecuteActuatorUseCase;
 import com.proyectosu.invernadero.actuators.domain.ports.ActuatorEventRepositoryPort;
+import com.proyectosu.invernadero.inventory.application.usecase.RegistrarConsumoUseCase;
+import com.proyectosu.invernadero.inventory.domain.ports.RegistroConsumoRepositoryPort;
 import com.proyectosu.invernadero.auth.domain.ports.JwtServicePort;
 import com.proyectosu.invernadero.auth.domain.ports.PasswordEncoderPort;
 import com.proyectosu.invernadero.auth.domain.ports.RoleRepositoryPort;
@@ -77,6 +79,13 @@ public class ApplicationConfig {
                 actuatorEventRepositoryPort,
                 mqttPublisherPortProvider
         );
+    }
+
+    @Bean
+    public RegistrarConsumoUseCase registrarConsumoUseCase(
+            RegistroConsumoRepositoryPort registroConsumoRepositoryPort
+    ) {
+        return new RegistrarConsumoUseCase(registroConsumoRepositoryPort);
     }
 
     @Bean
