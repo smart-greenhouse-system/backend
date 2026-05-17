@@ -6,11 +6,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Profile;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
 @Component
 @RequiredArgsConstructor
+@Profile("!test")
 public class MqttMessageListener {
 
     private final ObjectMapper objectMapper;

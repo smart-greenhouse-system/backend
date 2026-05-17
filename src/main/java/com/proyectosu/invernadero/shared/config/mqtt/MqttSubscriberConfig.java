@@ -3,6 +3,7 @@ package com.proyectosu.invernadero.shared.config.mqtt;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.core.MessageProducer;
@@ -14,6 +15,7 @@ import org.springframework.messaging.MessageChannel;
 
 @Configuration
 @EnableIntegration
+@Profile("!test")
 public class MqttSubscriberConfig {
 
     @Value("${mqtt.client-id}")

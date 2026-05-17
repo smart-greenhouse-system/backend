@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:invernadero_test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+
+  mongodb:
+    uri: mongodb://localhost:27017/invernadero_test
+
+jwt:
+  secret: test-secret-test-secret-test-secret-test-secret
+  expiration: 3600000

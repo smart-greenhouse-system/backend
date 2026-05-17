@@ -6,10 +6,12 @@ import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Profile;
 import tools.jackson.databind.ObjectMapper;
 
 @Component
 @RequiredArgsConstructor
+@Profile("!test")
 public class MqttPublisherAdapter implements MqttPublisherPort {
     private final MessageChannel mqttOutboundChannel;
     private final ObjectMapper objectMapper;

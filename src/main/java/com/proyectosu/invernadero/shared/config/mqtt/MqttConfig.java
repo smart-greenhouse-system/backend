@@ -4,9 +4,11 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 
 @Configuration
+@Profile("!test")
 public class MqttConfig {
 
     @Value("${mqtt.url}")

@@ -4,6 +4,7 @@ import com.proyectosu.invernadero.telemetria.application.usecase.RegistrarMedici
 import com.proyectosu.invernadero.telemetria.domain.model.MedicionTelemetria;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Profile;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @Component
+@Profile("!test")
 public class SensorNodo1MessageHandler {
 
     private final ObjectMapper objectMapper;
