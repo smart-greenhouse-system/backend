@@ -17,4 +17,9 @@ mqtt:
   client-id: backend-invernadero
   username: dablivius
   password: 12345
-  topic-in: invernadero/#
+  topics-in:
+    - invernadero/nodo1/sensores
+    - invernadero/nodo2/sensores
+    - invernadero/cam/imagen
+    - invernadero/+/actuadores/+/estado
+  device-offline-threshold-seconds: 120

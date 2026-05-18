@@ -12,6 +12,8 @@ import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannel
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.messaging.MessageChannel;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableIntegration
 public class MqttSubscriberConfig {
@@ -19,8 +21,8 @@ public class MqttSubscriberConfig {
     @Value("${mqtt.client-id}")
     private String clientId;
 
-    @Value("${mqtt.topic-in}")
-    private String topicIn;
+    @Value("${mqtt.topics-in:invernadero/#}")
+    private String[] topicsIn;
 
     @Bean
     public MessageChannel mqttInputChannel() {
@@ -34,16 +36,23 @@ public class MqttSubscriberConfig {
                 new MqttPahoMessageDrivenChannelAdapter(
                         clientId + "-sub",
                         factory,
-                        topicIn
+                        topicsIn
                 );
 
         adapter.setAutoStartup(true);
-        adapter.setQos(1);
+        int[] qosByTopic = Arrays.stream(topicsIn)
+                .mapToInt(this::resolveQosForTopic)
+                .toArray();
+        adapter.setQos(qosByTopic);
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());
         adapter.setOutputChannel(mqttInputChannel());
 
         return adapter;
+    }
+
+    private int resolveQosForTopic(String topic) {
+        return topic.endsWith("/sensores") ? 0 : 1;
     }
 
 }
