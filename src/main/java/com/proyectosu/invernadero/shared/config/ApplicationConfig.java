@@ -13,8 +13,15 @@ import com.proyectosu.invernadero.alerts.domain.ports.AlertNotificationPort;
 import com.proyectosu.invernadero.alerts.domain.ports.AlertRepositoryPort;
 import com.proyectosu.invernadero.inventory.application.usecase.RegistrarConsumoUseCase;
 import com.proyectosu.invernadero.inventory.domain.ports.RegistroConsumoRepositoryPort;
+import com.proyectosu.invernadero.notifications.center.application.usecase.DeleteNotificationUseCase;
+import com.proyectosu.invernadero.notifications.center.application.usecase.ListNotificationsUseCase;
+import com.proyectosu.invernadero.notifications.center.application.usecase.UpdateNotificationStatusUseCase;
+import com.proyectosu.invernadero.notifications.center.domain.ports.NotificationRepositoryPort;
 import com.proyectosu.invernadero.notifications.application.usecase.UpdateNotificationPreferencesUseCase;
 import com.proyectosu.invernadero.notifications.domain.ports.NotificationPreferencesRepositoryPort;
+import com.proyectosu.invernadero.greenhouseconfig.application.usecase.GetGreenhouseConfigUseCase;
+import com.proyectosu.invernadero.greenhouseconfig.application.usecase.UpdateGreenhouseConfigUseCase;
+import com.proyectosu.invernadero.greenhouseconfig.domain.ports.GreenhouseConfigRepositoryPort;
 import com.proyectosu.invernadero.thresholds.application.usecase.SaveThresholdRuleUseCase;
 import com.proyectosu.invernadero.thresholds.domain.ports.ThresholdRuleRepositoryPort;
 import com.proyectosu.invernadero.auth.domain.ports.JwtServicePort;
@@ -121,6 +128,35 @@ public class ApplicationConfig {
             @Bean
             public ListAlertsUseCase listAlertsUseCase(AlertRepositoryPort alertRepositoryPort) {
             return new ListAlertsUseCase(alertRepositoryPort);
+            }
+
+            @Bean
+            public ListNotificationsUseCase listNotificationsUseCase(NotificationRepositoryPort notificationRepositoryPort) {
+                return new ListNotificationsUseCase(notificationRepositoryPort);
+            }
+
+            @Bean
+            public UpdateNotificationStatusUseCase updateNotificationStatusUseCase(NotificationRepositoryPort notificationRepositoryPort) {
+                return new UpdateNotificationStatusUseCase(notificationRepositoryPort);
+            }
+
+            @Bean
+            public DeleteNotificationUseCase deleteNotificationUseCase(NotificationRepositoryPort notificationRepositoryPort) {
+                return new DeleteNotificationUseCase(notificationRepositoryPort);
+            }
+
+            @Bean
+            public GetGreenhouseConfigUseCase getGreenhouseConfigUseCase(
+                    GreenhouseConfigRepositoryPort greenhouseConfigRepositoryPort
+            ) {
+                return new GetGreenhouseConfigUseCase(greenhouseConfigRepositoryPort);
+            }
+
+            @Bean
+            public UpdateGreenhouseConfigUseCase updateGreenhouseConfigUseCase(
+                    GreenhouseConfigRepositoryPort greenhouseConfigRepositoryPort
+            ) {
+                return new UpdateGreenhouseConfigUseCase(greenhouseConfigRepositoryPort);
             }
 
             @Bean
