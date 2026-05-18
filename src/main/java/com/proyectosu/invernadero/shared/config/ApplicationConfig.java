@@ -7,6 +7,10 @@ import com.proyectosu.invernadero.auth.application.usecase.LoginUserUseCase;
 import com.proyectosu.invernadero.auth.application.usecase.RegisterUserUseCase;
 import com.proyectosu.invernadero.actuators.application.usecase.ExecuteActuatorUseCase;
 import com.proyectosu.invernadero.actuators.domain.ports.ActuatorEventRepositoryPort;
+import com.proyectosu.invernadero.alerts.application.usecase.CreateThresholdAlertUseCase;
+import com.proyectosu.invernadero.alerts.application.usecase.ListAlertsUseCase;
+import com.proyectosu.invernadero.alerts.domain.ports.AlertNotificationPort;
+import com.proyectosu.invernadero.alerts.domain.ports.AlertRepositoryPort;
 import com.proyectosu.invernadero.inventory.application.usecase.RegistrarConsumoUseCase;
 import com.proyectosu.invernadero.inventory.domain.ports.RegistroConsumoRepositoryPort;
 import com.proyectosu.invernadero.notifications.application.usecase.UpdateNotificationPreferencesUseCase;
@@ -102,6 +106,22 @@ public class ApplicationConfig {
             notificationPreferencesRepositoryPort
         );
         }
+
+            @Bean
+            public CreateThresholdAlertUseCase createThresholdAlertUseCase(
+                AlertRepositoryPort alertRepositoryPort,
+                AlertNotificationPort alertNotificationPort
+            ) {
+            return new CreateThresholdAlertUseCase(
+                alertRepositoryPort,
+                alertNotificationPort
+            );
+            }
+
+            @Bean
+            public ListAlertsUseCase listAlertsUseCase(AlertRepositoryPort alertRepositoryPort) {
+            return new ListAlertsUseCase(alertRepositoryPort);
+            }
 
             @Bean
             public SaveThresholdRuleUseCase saveThresholdRuleUseCase(
