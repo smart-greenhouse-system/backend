@@ -11,6 +11,8 @@ import com.proyectosu.invernadero.inventory.application.usecase.RegistrarConsumo
 import com.proyectosu.invernadero.inventory.domain.ports.RegistroConsumoRepositoryPort;
 import com.proyectosu.invernadero.notifications.application.usecase.UpdateNotificationPreferencesUseCase;
 import com.proyectosu.invernadero.notifications.domain.ports.NotificationPreferencesRepositoryPort;
+import com.proyectosu.invernadero.thresholds.application.usecase.SaveThresholdRuleUseCase;
+import com.proyectosu.invernadero.thresholds.domain.ports.ThresholdRuleRepositoryPort;
 import com.proyectosu.invernadero.auth.domain.ports.JwtServicePort;
 import com.proyectosu.invernadero.auth.domain.ports.PasswordEncoderPort;
 import com.proyectosu.invernadero.auth.domain.ports.RoleRepositoryPort;
@@ -100,6 +102,13 @@ public class ApplicationConfig {
             notificationPreferencesRepositoryPort
         );
         }
+
+            @Bean
+            public SaveThresholdRuleUseCase saveThresholdRuleUseCase(
+                    ThresholdRuleRepositoryPort thresholdRuleRepositoryPort
+            ) {
+            return new SaveThresholdRuleUseCase(thresholdRuleRepositoryPort);
+            }
 
     @Bean
     public ObtenerUltimaMedicionUseCase obtenerUltimaMedicionUseCase(

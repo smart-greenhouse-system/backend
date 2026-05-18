@@ -1,5 +1,6 @@
 package com.proyectosu.invernadero.shared.security;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,6 +24,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/api/eventos").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/v1/threshold-rules").hasAnyAuthority("ROLE_ADMIN", "ROLE_OPERATOR")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
