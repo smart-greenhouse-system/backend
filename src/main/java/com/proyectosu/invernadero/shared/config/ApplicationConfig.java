@@ -9,6 +9,8 @@ import com.proyectosu.invernadero.actuators.application.usecase.ExecuteActuatorU
 import com.proyectosu.invernadero.actuators.domain.ports.ActuatorEventRepositoryPort;
 import com.proyectosu.invernadero.inventory.application.usecase.RegistrarConsumoUseCase;
 import com.proyectosu.invernadero.inventory.domain.ports.RegistroConsumoRepositoryPort;
+import com.proyectosu.invernadero.notifications.application.usecase.UpdateNotificationPreferencesUseCase;
+import com.proyectosu.invernadero.notifications.domain.ports.NotificationPreferencesRepositoryPort;
 import com.proyectosu.invernadero.auth.domain.ports.JwtServicePort;
 import com.proyectosu.invernadero.auth.domain.ports.PasswordEncoderPort;
 import com.proyectosu.invernadero.auth.domain.ports.RoleRepositoryPort;
@@ -87,6 +89,17 @@ public class ApplicationConfig {
     ) {
         return new RegistrarConsumoUseCase(registroConsumoRepositoryPort);
     }
+
+        @Bean
+        public UpdateNotificationPreferencesUseCase updateNotificationPreferencesUseCase(
+            UserRepositoryPort userRepositoryPort,
+            NotificationPreferencesRepositoryPort notificationPreferencesRepositoryPort
+        ) {
+        return new UpdateNotificationPreferencesUseCase(
+            userRepositoryPort,
+            notificationPreferencesRepositoryPort
+        );
+        }
 
     @Bean
     public ObtenerUltimaMedicionUseCase obtenerUltimaMedicionUseCase(
