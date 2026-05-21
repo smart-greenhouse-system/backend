@@ -17,3 +17,6 @@ mqtt:
   username: test
   password: test123
   topic-in: invernadero/#
+
+ai:
+  base-url: http://localhost:5000
