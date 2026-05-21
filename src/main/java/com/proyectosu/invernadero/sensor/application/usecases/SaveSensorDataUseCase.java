@@ -1,16 +1,20 @@
 package com.proyectosu.invernadero.sensor.application.usecases;
 
+import com.proyectosu.invernadero.device.application.command.UpsertDeviceStatusCommand;
+import com.proyectosu.invernadero.device.application.usecases.UpsertDeviceStatusUseCase;
 import com.proyectosu.invernadero.sensor.application.command.SaveSensorDataCommand;
 import com.proyectosu.invernadero.sensor.domain.model.SensorData;
 import com.proyectosu.invernadero.sensor.domain.port.SensorDataRepositoryPort;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 @RequiredArgsConstructor
 public class SaveSensorDataUseCase {
 
     private final SensorDataRepositoryPort sensorDataRepositoryPort;
+    private final UpsertDeviceStatusUseCase upsertDeviceStatusUseCase;
 
     public SensorData execute(SaveSensorDataCommand command) {
         validateCommand(command);
@@ -20,7 +24,16 @@ public class SaveSensorDataUseCase {
                 command.getSensores()
         );
 
-        return sensorDataRepositoryPort.save(sensorData);
+        SensorData savedSensorData = sensorDataRepositoryPort.save(sensorData);
+
+        upsertDeviceStatusUseCase.execute(
+                UpsertDeviceStatusCommand.builder()
+                        .deviceId(command.getDeviceId())
+                        .sensores(new ArrayList<>(command.getSensores().keySet()))
+                        .build()
+        );
+
+        return savedSensorData;
     }
 
     private void validateCommand(SaveSensorDataCommand command) {
