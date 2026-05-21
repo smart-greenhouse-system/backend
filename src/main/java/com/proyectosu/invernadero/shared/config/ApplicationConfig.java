@@ -1,5 +1,6 @@
 package com.proyectosu.invernadero.shared.config;
 
+import com.proyectosu.invernadero.actuator.application.usecases.ExecuteActuatorUseCase;
 import com.proyectosu.invernadero.actuator.application.usecases.ExecuteTimedActuatorUseCase;
 import com.proyectosu.invernadero.actuator.domain.port.ActuatorEventRepositoryPort;
 import com.proyectosu.invernadero.actuator.domain.port.ActuatorResolverPort;
@@ -65,6 +66,14 @@ public class ApplicationConfig {
                 greenhouseConfigReaderPort,
                 timedActuatorExecutorPort
         );
+    }
+
+    @Bean
+    public ExecuteActuatorUseCase executeActuatorUseCase(
+            ActuatorEventRepositoryPort actuatorEventRepositoryPort,
+            MqttPublisherPort mqttPublisherPort
+    ) {
+        return new ExecuteActuatorUseCase(actuatorEventRepositoryPort, mqttPublisherPort);
     }
 
     @Bean
