@@ -1,6 +1,7 @@
-package com.proyectosu.invernadero.greenhouse.infrastructure.outbound.persistence;
+package com.proyectosu.invernadero.greenhouse.infrastructure.outbound.mappers;
 
 import com.proyectosu.invernadero.greenhouse.domain.model.GreenhouseConfig;
+import com.proyectosu.invernadero.greenhouse.infrastructure.outbound.persistence.MongoGreenhouseConfigDocument;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

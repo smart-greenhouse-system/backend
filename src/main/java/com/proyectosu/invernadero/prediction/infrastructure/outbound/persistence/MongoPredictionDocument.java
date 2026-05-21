@@ -1,4 +1,4 @@
-package com.proyectosu.invernadero.prediction.infrastructure.outbound;
+package com.proyectosu.invernadero.prediction.infrastructure.outbound.persistence;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

@@ -1,4 +1,6 @@
 package com.proyectosu.invernadero.greenhouse.infrastructure.outbound.persistence;
 
-public interface MongoGreenhouseConfigRepository {
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface MongoGreenhouseConfigRepository extends MongoRepository<MongoGreenhouseConfigDocument, String> {
 }
