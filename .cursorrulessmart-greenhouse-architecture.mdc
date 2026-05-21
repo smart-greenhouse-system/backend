@@ -1,0 +1,56 @@
+# Smart Greenhouse Architecture Rules
+
+This project is a Spring Boot backend for a Smart Greenhouse System.
+
+Use Java 17, Spring Boot, MongoDB, MQTT, MapStruct, Lombok and Gradle.
+
+The architecture is Hexagonal Architecture + Vertical Slicing.
+
+Package base:
+com.proyectosu.invernadero
+
+Follow the existing implemented slice:
+prediction + actuator + greenhouse
+
+This implemented flow is the official pattern:
+Controller -> DtoMapper -> Command -> UseCase -> Domain Ports -> Infrastructure Adapters
+
+Important rules:
+- Do not put business logic in controllers.
+- Controllers only receive requests, call mappers and execute use cases.
+- Use MapStruct for DTO/request/response mapping.
+- Use Lombok to reduce boilerplate.
+- Domain models go in domain/model.
+- Ports go in domain/port.
+- UseCases go in application/usecases.
+- Commands go in application/command.
+- Inbound REST controllers go in infrastructure/inbound.
+- Persistence documents, repositories, adapters and persistence mappers go in infrastructure/outbound.
+- MongoDB is infrastructure.
+- MQTT is centralized in shared.
+- Use the existing MqttPublisherPort located in shared/domain/ports.
+- Do not create duplicate MqttPublisherPort.
+- Do not modify the existing working POST /api/predictions flow unless explicitly asked.
+- Do not refactor authentication unless explicitly asked.
+- Do not move existing packages unless explicitly asked.
+- Do not invent unnecessary enterprise abstractions.
+- Keep the project functional, clean, simple and maintainable.
+
+When implementing new modules, copy the style of:
+prediction
+actuator
+greenhouse
+
+Use @Bean configuration for UseCases if the existing project does so.
+Do not annotate UseCases with @Service unless the existing pattern changes intentionally.
+
+For MongoDB:
+- Use @Document for persistence documents.
+- Use MongoRepository for repositories.
+- Use MapStruct mappers for document/domain conversion.
+- Adapters implement domain ports.
+
+For MQTT:
+- Listener should delegate to handlers.
+- Handlers should not contain business logic.
+- Handlers should convert MQTT payloads and call UseCases.
