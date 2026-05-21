@@ -1,8 +1,13 @@
 package com.proyectosu.invernadero.shared.config;
 
+import com.proyectosu.invernadero.actuator.application.usecases.CreateActuatorUseCase;
+import com.proyectosu.invernadero.actuator.application.usecases.DeleteActuatorUseCase;
 import com.proyectosu.invernadero.actuator.application.usecases.ExecuteActuatorUseCase;
 import com.proyectosu.invernadero.actuator.application.usecases.ExecuteTimedActuatorUseCase;
+import com.proyectosu.invernadero.actuator.application.usecases.GetActuatorsUseCase;
+import com.proyectosu.invernadero.actuator.application.usecases.UpdateActuatorUseCase;
 import com.proyectosu.invernadero.actuator.domain.port.ActuatorEventRepositoryPort;
+import com.proyectosu.invernadero.actuator.domain.port.ActuatorRepositoryPort;
 import com.proyectosu.invernadero.actuator.domain.port.ActuatorResolverPort;
 import com.proyectosu.invernadero.auth.application.usecase.LoginUserUseCase;
 import com.proyectosu.invernadero.auth.application.usecase.RegisterUserUseCase;
@@ -86,6 +91,26 @@ public class ApplicationConfig {
     @Bean
     public GetLatestImageUseCase getLatestImageUseCase(ImageStoragePort imageStoragePort) {
         return new GetLatestImageUseCase(imageStoragePort);
+    }
+
+    @Bean
+    public GetActuatorsUseCase getActuatorsUseCase(ActuatorRepositoryPort actuatorRepositoryPort) {
+        return new GetActuatorsUseCase(actuatorRepositoryPort);
+    }
+
+    @Bean
+    public CreateActuatorUseCase createActuatorUseCase(ActuatorRepositoryPort actuatorRepositoryPort) {
+        return new CreateActuatorUseCase(actuatorRepositoryPort);
+    }
+
+    @Bean
+    public UpdateActuatorUseCase updateActuatorUseCase(ActuatorRepositoryPort actuatorRepositoryPort) {
+        return new UpdateActuatorUseCase(actuatorRepositoryPort);
+    }
+
+    @Bean
+    public DeleteActuatorUseCase deleteActuatorUseCase(ActuatorRepositoryPort actuatorRepositoryPort) {
+        return new DeleteActuatorUseCase(actuatorRepositoryPort);
     }
 
     @Bean
