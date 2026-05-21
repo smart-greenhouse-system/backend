@@ -14,6 +14,9 @@ import com.proyectosu.invernadero.inventory.application.usecases.CreateInventory
 import com.proyectosu.invernadero.inventory.application.usecases.GetInventoryUseCase;
 import com.proyectosu.invernadero.inventory.application.usecases.UpdateInventoryItemUseCase;
 import com.proyectosu.invernadero.inventory.domain.port.InventoryRepositoryPort;
+import com.proyectosu.invernadero.image.application.usecases.GetLatestImageUseCase;
+import com.proyectosu.invernadero.image.application.usecases.StoreLatestImageUseCase;
+import com.proyectosu.invernadero.image.domain.port.ImageStoragePort;
 import com.proyectosu.invernadero.greenhouse.application.usecases.GetGreenhouseConfigUseCase;
 import com.proyectosu.invernadero.greenhouse.application.usecases.UpdateGreenhouseConfigUseCase;
 import com.proyectosu.invernadero.greenhouse.domain.port.GreenhouseConfigRepositoryPort;
@@ -66,6 +69,16 @@ public class ApplicationConfig {
                 greenhouseConfigReaderPort,
                 timedActuatorExecutorPort
         );
+    }
+
+    @Bean
+    public StoreLatestImageUseCase storeLatestImageUseCase(ImageStoragePort imageStoragePort) {
+        return new StoreLatestImageUseCase(imageStoragePort);
+    }
+
+    @Bean
+    public GetLatestImageUseCase getLatestImageUseCase(ImageStoragePort imageStoragePort) {
+        return new GetLatestImageUseCase(imageStoragePort);
     }
 
     @Bean

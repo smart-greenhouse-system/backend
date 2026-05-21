@@ -1,5 +1,6 @@
 package com.proyectosu.invernadero.shared.infrastructure.mqtt;
 
+import com.proyectosu.invernadero.image.infrastructure.inbound.mqtt.ImageMessageHandler;
 import com.proyectosu.invernadero.sensor.infrastructure.inbound.mqtt.SensorMessageHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ public class MqttMessageListener {
 
     private final ObjectMapper objectMapper;
     private final SensorMessageHandler sensorMessageHandler;
+    private final ImageMessageHandler imageMessageHandler;
 
     @ServiceActivator(inputChannel = "mqttInputChannel")
     public void recibirMensaje(Message<?> message) {
@@ -34,6 +36,8 @@ public class MqttMessageListener {
 
             if (sensorMessageHandler.supports(topic)) {
                 sensorMessageHandler.handle(topic, json);
+            } else if (imageMessageHandler.supports(topic)) {
+                imageMessageHandler.handle(topic, json);
             } else if (topic.matches("invernadero/[^/]+/actuadores/[^/]+/estado")) {
                 //Se ejecutara el metodo del handler de actuadores
             }
