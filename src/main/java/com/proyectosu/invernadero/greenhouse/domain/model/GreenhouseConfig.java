@@ -52,4 +52,18 @@ public class GreenhouseConfig {
                 createdAt
         );
     }
+
+    public GreenhouseConfig applyPartialUpdate(
+            String greenhouseName,
+            Boolean automaticMode,
+            Integer aiAnalysisFrequencyMinutes
+    ) {
+        return GreenhouseConfig.restore(
+                this.id,
+                greenhouseName != null ? greenhouseName : this.greenhouseName,
+                automaticMode != null ? automaticMode : this.automaticMode,
+                aiAnalysisFrequencyMinutes != null ? aiAnalysisFrequencyMinutes : this.aiAnalysisFrequencyMinutes,
+                this.createdAt
+        );
+    }
 }

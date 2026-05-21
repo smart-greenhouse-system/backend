@@ -6,6 +6,9 @@ import com.proyectosu.invernadero.actuator.domain.port.ActuatorResolverPort;
 import com.proyectosu.invernadero.auth.application.usecase.LoginUserUseCase;
 import com.proyectosu.invernadero.auth.application.usecase.RegisterUserUseCase;
 import com.proyectosu.invernadero.auth.domain.ports.*;
+import com.proyectosu.invernadero.greenhouse.application.usecases.GetGreenhouseConfigUseCase;
+import com.proyectosu.invernadero.greenhouse.application.usecases.UpdateGreenhouseConfigUseCase;
+import com.proyectosu.invernadero.greenhouse.domain.port.GreenhouseConfigRepositoryPort;
 import com.proyectosu.invernadero.prediction.application.usecases.ProcessAiPredictionUseCase;
 import com.proyectosu.invernadero.prediction.domain.port.GreenhouseConfigReaderPort;
 import com.proyectosu.invernadero.prediction.domain.port.PredictionRepositoryPort;
@@ -70,6 +73,20 @@ public class ApplicationConfig {
                 mqttPublisherPort,
                 taskScheduler
         );
+    }
+
+    @Bean
+    public GetGreenhouseConfigUseCase getGreenhouseConfigUseCase(
+            GreenhouseConfigRepositoryPort greenhouseConfigRepositoryPort
+    ) {
+        return new GetGreenhouseConfigUseCase(greenhouseConfigRepositoryPort);
+    }
+
+    @Bean
+    public UpdateGreenhouseConfigUseCase updateGreenhouseConfigUseCase(
+            GreenhouseConfigRepositoryPort greenhouseConfigRepositoryPort
+    ) {
+        return new UpdateGreenhouseConfigUseCase(greenhouseConfigRepositoryPort);
     }
 
     @Bean
