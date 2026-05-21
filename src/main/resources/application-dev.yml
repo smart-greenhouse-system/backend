@@ -5,15 +5,15 @@ spring:
     password: ${DB_PASSWORD}
 
   mongodb:
-      uri: mongodb://localhost:27017/invernadero
+      uri: mongodb+srv://backend_user:Invernadero123@greenhouse-cluster.qr22rhi.mongodb.net/invernadero_db?appName=greenhouse-cluster
 
 
 jwt:
   secret: Znfc8uGSMPo28/dDGxze38e/0WuCEsZR+gXxSBdVlXw=
 
 mqtt:
-  url: ssl://u19791c4.ala.us-east-1.emqxsl.com:8883
+  url: ssl://p9471c80.ala.us-east-1.emqxsl.com:8883
   client-id: backend-invernadero
-  username: iot_user
-  password: iot1234
+  username: test
+  password: test123
   topic-in: invernadero/#
