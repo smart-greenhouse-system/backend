@@ -1,5 +1,6 @@
 package com.proyectosu.invernadero.shared.infrastructure.mqtt;
 
+import com.proyectosu.invernadero.sensor.infrastructure.inbound.mqtt.SensorMessageHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -14,7 +15,7 @@ import tools.jackson.databind.ObjectMapper;
 public class MqttMessageListener {
 
     private final ObjectMapper objectMapper;
-    //Aqui iran los handlers
+    private final SensorMessageHandler sensorMessageHandler;
 
     @ServiceActivator(inputChannel = "mqttInputChannel")
     public void recibirMensaje(Message<?> message) {
@@ -30,15 +31,15 @@ public class MqttMessageListener {
                 log.warn("Mensaje ignorado en el tópico [{}]. El payload no es un JSON válido: {}", topic, payload);
                 return;
             }
-            //aca se pondran los topics correctos dinamicos
-            if (topic.startsWith("invernadero/{device_id}/sensores")) {
-                //Se ejecutara el metodo del handler
-            } else if (topic.startsWith("invernadero/{device_id}/actuadores/{tipo}/estado")) {
-                //Se ejecutara el metodo del handler
+
+            if (sensorMessageHandler.supports(topic)) {
+                sensorMessageHandler.handle(topic, json);
+            } else if (topic.matches("invernadero/[^/]+/actuadores/[^/]+/estado")) {
+                //Se ejecutara el metodo del handler de actuadores
             }
 
         } catch (Exception e) {
             log.error("Error inesperado procesando mensaje en el tópico: {}", topic, e);
         }
     }
-    }
+}

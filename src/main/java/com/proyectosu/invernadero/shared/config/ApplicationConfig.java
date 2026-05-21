@@ -10,6 +10,10 @@ import com.proyectosu.invernadero.prediction.application.usecases.ProcessAiPredi
 import com.proyectosu.invernadero.prediction.domain.port.GreenhouseConfigReaderPort;
 import com.proyectosu.invernadero.prediction.domain.port.PredictionRepositoryPort;
 import com.proyectosu.invernadero.prediction.domain.port.TimedActuatorExecutorPort;
+import com.proyectosu.invernadero.sensor.application.usecases.GetLatestSensorDataUseCase;
+import com.proyectosu.invernadero.sensor.application.usecases.GetSensorHistoryUseCase;
+import com.proyectosu.invernadero.sensor.application.usecases.SaveSensorDataUseCase;
+import com.proyectosu.invernadero.sensor.domain.port.SensorDataRepositoryPort;
 import com.proyectosu.invernadero.shared.domain.ports.MqttPublisherPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -66,6 +70,27 @@ public class ApplicationConfig {
                 mqttPublisherPort,
                 taskScheduler
         );
+    }
+
+    @Bean
+    public SaveSensorDataUseCase saveSensorDataUseCase(
+            SensorDataRepositoryPort sensorDataRepositoryPort
+    ) {
+        return new SaveSensorDataUseCase(sensorDataRepositoryPort);
+    }
+
+    @Bean
+    public GetLatestSensorDataUseCase getLatestSensorDataUseCase(
+            SensorDataRepositoryPort sensorDataRepositoryPort
+    ) {
+        return new GetLatestSensorDataUseCase(sensorDataRepositoryPort);
+    }
+
+    @Bean
+    public GetSensorHistoryUseCase getSensorHistoryUseCase(
+            SensorDataRepositoryPort sensorDataRepositoryPort
+    ) {
+        return new GetSensorHistoryUseCase(sensorDataRepositoryPort);
     }
 
 }
