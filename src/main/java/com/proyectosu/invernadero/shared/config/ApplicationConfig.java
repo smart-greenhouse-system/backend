@@ -29,7 +29,10 @@ import com.proyectosu.invernadero.image.domain.port.ImageStoragePort;
 import com.proyectosu.invernadero.greenhouse.application.usecases.GetGreenhouseConfigUseCase;
 import com.proyectosu.invernadero.greenhouse.application.usecases.UpdateGreenhouseConfigUseCase;
 import com.proyectosu.invernadero.greenhouse.domain.port.GreenhouseConfigRepositoryPort;
+import com.proyectosu.invernadero.prediction.application.usecases.GetImageAnalysisPredictionsUseCase;
+import com.proyectosu.invernadero.prediction.application.usecases.GetLatestImageAnalysisPredictionUseCase;
 import com.proyectosu.invernadero.prediction.application.usecases.ProcessAiPredictionUseCase;
+import com.proyectosu.invernadero.prediction.application.usecases.SaveImageAnalysisPredictionUseCase;
 import com.proyectosu.invernadero.prediction.domain.port.GreenhouseConfigReaderPort;
 import com.proyectosu.invernadero.prediction.domain.port.PredictionRepositoryPort;
 import com.proyectosu.invernadero.prediction.domain.port.TimedActuatorExecutorPort;
@@ -85,8 +88,32 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public AnalyzeImageUseCase analyzeImageUseCase(AiPredictionClientPort aiPredictionClientPort) {
-        return new AnalyzeImageUseCase(aiPredictionClientPort);
+    public SaveImageAnalysisPredictionUseCase saveImageAnalysisPredictionUseCase(
+            PredictionRepositoryPort predictionRepositoryPort
+    ) {
+        return new SaveImageAnalysisPredictionUseCase(predictionRepositoryPort);
+    }
+
+    @Bean
+    public GetLatestImageAnalysisPredictionUseCase getLatestImageAnalysisPredictionUseCase(
+            PredictionRepositoryPort predictionRepositoryPort
+    ) {
+        return new GetLatestImageAnalysisPredictionUseCase(predictionRepositoryPort);
+    }
+
+    @Bean
+    public GetImageAnalysisPredictionsUseCase getImageAnalysisPredictionsUseCase(
+            PredictionRepositoryPort predictionRepositoryPort
+    ) {
+        return new GetImageAnalysisPredictionsUseCase(predictionRepositoryPort);
+    }
+
+    @Bean
+    public AnalyzeImageUseCase analyzeImageUseCase(
+            AiPredictionClientPort aiPredictionClientPort,
+            SaveImageAnalysisPredictionUseCase saveImageAnalysisPredictionUseCase
+    ) {
+        return new AnalyzeImageUseCase(aiPredictionClientPort, saveImageAnalysisPredictionUseCase);
     }
 
     @Bean
