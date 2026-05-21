@@ -8,4 +8,6 @@ public interface ActuatorEventRepositoryPort {
     ActuatorEvent save(ActuatorEvent actuatorEvent);
 
     List<ActuatorEvent> findAll();
+
+    List<ActuatorEvent> findByDeviceId(String deviceId);
 }

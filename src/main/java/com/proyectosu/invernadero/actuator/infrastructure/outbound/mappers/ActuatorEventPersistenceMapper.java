@@ -20,6 +20,9 @@ public interface ActuatorEventPersistenceMapper {
                 document.getAction(),
                 Boolean.TRUE.equals(document.getExecuted()),
                 document.getOrigin(),
+                document.getEventType(),
+                document.getStatus(),
+                document.getTopic(),
                 document.getTimeAction(),
                 document.getCreatedAt()
         );

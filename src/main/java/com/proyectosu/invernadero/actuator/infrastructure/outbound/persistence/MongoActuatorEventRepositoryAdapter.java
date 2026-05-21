@@ -29,4 +29,12 @@ public class MongoActuatorEventRepositoryAdapter implements ActuatorEventReposit
                 .map(actuatorEventPersistenceMapper::toDomain)
                 .toList();
     }
+
+    @Override
+    public List<ActuatorEvent> findByDeviceId(String deviceId) {
+        return mongoActuatorEventRepository.findByDeviceIdOrderByCreatedAtDesc(deviceId)
+                .stream()
+                .map(actuatorEventPersistenceMapper::toDomain)
+                .toList();
+    }
 }

@@ -4,7 +4,9 @@ import com.proyectosu.invernadero.actuator.application.usecases.CreateActuatorUs
 import com.proyectosu.invernadero.actuator.application.usecases.DeleteActuatorUseCase;
 import com.proyectosu.invernadero.actuator.application.usecases.ExecuteActuatorUseCase;
 import com.proyectosu.invernadero.actuator.application.usecases.ExecuteTimedActuatorUseCase;
+import com.proyectosu.invernadero.actuator.application.usecases.GetActuatorEventsUseCase;
 import com.proyectosu.invernadero.actuator.application.usecases.GetActuatorsUseCase;
+import com.proyectosu.invernadero.actuator.application.usecases.ProcessActuatorStateUseCase;
 import com.proyectosu.invernadero.actuator.application.usecases.UpdateActuatorUseCase;
 import com.proyectosu.invernadero.actuator.domain.port.ActuatorEventRepositoryPort;
 import com.proyectosu.invernadero.actuator.domain.port.ActuatorRepositoryPort;
@@ -69,12 +71,16 @@ public class ApplicationConfig {
     public ProcessAiPredictionUseCase processAiPredictionUseCase(
             PredictionRepositoryPort predictionRepositoryPort,
             GreenhouseConfigReaderPort greenhouseConfigReaderPort,
-            TimedActuatorExecutorPort timedActuatorExecutorPort
+            TimedActuatorExecutorPort timedActuatorExecutorPort,
+            ActuatorRepositoryPort actuatorRepositoryPort,
+            DeviceRepositoryPort deviceRepositoryPort
     ) {
         return new ProcessAiPredictionUseCase(
                 predictionRepositoryPort,
                 greenhouseConfigReaderPort,
-                timedActuatorExecutorPort
+                timedActuatorExecutorPort,
+                actuatorRepositoryPort,
+                deviceRepositoryPort
         );
     }
 
@@ -114,11 +120,33 @@ public class ApplicationConfig {
     }
 
     @Bean
+    public ProcessActuatorStateUseCase processActuatorStateUseCase(
+            ActuatorRepositoryPort actuatorRepositoryPort,
+            ActuatorEventRepositoryPort actuatorEventRepositoryPort
+    ) {
+        return new ProcessActuatorStateUseCase(actuatorRepositoryPort, actuatorEventRepositoryPort);
+    }
+
+    @Bean
+    public GetActuatorEventsUseCase getActuatorEventsUseCase(
+            ActuatorEventRepositoryPort actuatorEventRepositoryPort
+    ) {
+        return new GetActuatorEventsUseCase(actuatorEventRepositoryPort);
+    }
+
+    @Bean
     public ExecuteActuatorUseCase executeActuatorUseCase(
             ActuatorEventRepositoryPort actuatorEventRepositoryPort,
-            MqttPublisherPort mqttPublisherPort
+            MqttPublisherPort mqttPublisherPort,
+            ActuatorRepositoryPort actuatorRepositoryPort,
+            DeviceRepositoryPort deviceRepositoryPort
     ) {
-        return new ExecuteActuatorUseCase(actuatorEventRepositoryPort, mqttPublisherPort);
+        return new ExecuteActuatorUseCase(
+                actuatorEventRepositoryPort,
+                mqttPublisherPort,
+                actuatorRepositoryPort,
+                deviceRepositoryPort
+        );
     }
 
     @Bean

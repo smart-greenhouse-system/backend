@@ -1,21 +1,18 @@
-package com.proyectosu.invernadero.actuator.infrastructure.outbound.persistence;
+package com.proyectosu.invernadero.actuator.dto.response;
 
-import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.time.Instant;
 
 @Getter
-@Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Document(collection = "actuator_events")
-public class MongoActuatorEventDocument {
-    @Id
+public class ActuatorEventResponse {
+
     private String id;
 
+    @JsonProperty("device_id")
     private String deviceId;
 
     private String actuator;
@@ -26,14 +23,16 @@ public class MongoActuatorEventDocument {
 
     private String origin;
 
+    @JsonProperty("event_type")
     private String eventType;
 
     private String status;
 
     private String topic;
 
+    @JsonProperty("time_action")
     private Integer timeAction;
 
+    @JsonProperty("created_at")
     private Instant createdAt;
-
 }
