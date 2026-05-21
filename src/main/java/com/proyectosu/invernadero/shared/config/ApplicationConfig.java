@@ -6,6 +6,13 @@ import com.proyectosu.invernadero.actuator.domain.port.ActuatorResolverPort;
 import com.proyectosu.invernadero.auth.application.usecase.LoginUserUseCase;
 import com.proyectosu.invernadero.auth.application.usecase.RegisterUserUseCase;
 import com.proyectosu.invernadero.auth.domain.ports.*;
+import com.proyectosu.invernadero.device.application.usecases.GetDevicesUseCase;
+import com.proyectosu.invernadero.device.application.usecases.UpsertDeviceStatusUseCase;
+import com.proyectosu.invernadero.device.domain.port.DeviceRepositoryPort;
+import com.proyectosu.invernadero.inventory.application.usecases.CreateInventoryItemUseCase;
+import com.proyectosu.invernadero.inventory.application.usecases.GetInventoryUseCase;
+import com.proyectosu.invernadero.inventory.application.usecases.UpdateInventoryItemUseCase;
+import com.proyectosu.invernadero.inventory.domain.port.InventoryRepositoryPort;
 import com.proyectosu.invernadero.greenhouse.application.usecases.GetGreenhouseConfigUseCase;
 import com.proyectosu.invernadero.greenhouse.application.usecases.UpdateGreenhouseConfigUseCase;
 import com.proyectosu.invernadero.greenhouse.domain.port.GreenhouseConfigRepositoryPort;
@@ -90,10 +97,40 @@ public class ApplicationConfig {
     }
 
     @Bean
+    public GetDevicesUseCase getDevicesUseCase(DeviceRepositoryPort deviceRepositoryPort) {
+        return new GetDevicesUseCase(deviceRepositoryPort);
+    }
+
+    @Bean
+    public UpsertDeviceStatusUseCase upsertDeviceStatusUseCase(DeviceRepositoryPort deviceRepositoryPort) {
+        return new UpsertDeviceStatusUseCase(deviceRepositoryPort);
+    }
+
+    @Bean
     public SaveSensorDataUseCase saveSensorDataUseCase(
-            SensorDataRepositoryPort sensorDataRepositoryPort
+            SensorDataRepositoryPort sensorDataRepositoryPort,
+            UpsertDeviceStatusUseCase upsertDeviceStatusUseCase
     ) {
-        return new SaveSensorDataUseCase(sensorDataRepositoryPort);
+        return new SaveSensorDataUseCase(sensorDataRepositoryPort, upsertDeviceStatusUseCase);
+    }
+
+    @Bean
+    public GetInventoryUseCase getInventoryUseCase(InventoryRepositoryPort inventoryRepositoryPort) {
+        return new GetInventoryUseCase(inventoryRepositoryPort);
+    }
+
+    @Bean
+    public CreateInventoryItemUseCase createInventoryItemUseCase(
+            InventoryRepositoryPort inventoryRepositoryPort
+    ) {
+        return new CreateInventoryItemUseCase(inventoryRepositoryPort);
+    }
+
+    @Bean
+    public UpdateInventoryItemUseCase updateInventoryItemUseCase(
+            InventoryRepositoryPort inventoryRepositoryPort
+    ) {
+        return new UpdateInventoryItemUseCase(inventoryRepositoryPort);
     }
 
     @Bean
