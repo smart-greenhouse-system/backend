@@ -11,6 +11,8 @@ public interface ActuatorRepositoryPort {
 
     Optional<Actuator> findByActuatorId(String actuatorId);
 
+    Optional<Actuator> findByDeviceIdAndActuador(String deviceId, String actuador);
+
     boolean existsByActuatorId(String actuatorId);
 
     Actuator save(Actuator actuator);

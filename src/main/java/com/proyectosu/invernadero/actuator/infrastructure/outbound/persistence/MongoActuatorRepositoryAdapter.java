@@ -31,6 +31,12 @@ public class MongoActuatorRepositoryAdapter implements ActuatorRepositoryPort {
     }
 
     @Override
+    public Optional<Actuator> findByDeviceIdAndActuador(String deviceId, String actuador) {
+        return mongoActuatorRepository.findByDeviceIdAndActuador(deviceId, actuador)
+                .map(actuatorPersistenceMapper::toDomain);
+    }
+
+    @Override
     public boolean existsByActuatorId(String actuatorId) {
         return mongoActuatorRepository.existsById(actuatorId);
     }

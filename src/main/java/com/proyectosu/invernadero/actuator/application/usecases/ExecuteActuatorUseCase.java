@@ -1,8 +1,11 @@
 package com.proyectosu.invernadero.actuator.application.usecases;
 
 import com.proyectosu.invernadero.actuator.application.command.ExecuteActuatorCommand;
+import com.proyectosu.invernadero.actuator.domain.model.Actuator;
 import com.proyectosu.invernadero.actuator.domain.model.ActuatorEvent;
 import com.proyectosu.invernadero.actuator.domain.port.ActuatorEventRepositoryPort;
+import com.proyectosu.invernadero.actuator.domain.port.ActuatorRepositoryPort;
+import com.proyectosu.invernadero.device.domain.port.DeviceRepositoryPort;
 import com.proyectosu.invernadero.shared.domain.ports.MqttPublisherPort;
 import lombok.RequiredArgsConstructor;
 
@@ -17,21 +20,45 @@ public class ExecuteActuatorUseCase {
 
     private final ActuatorEventRepositoryPort actuatorEventRepositoryPort;
     private final MqttPublisherPort mqttPublisherPort;
+    private final ActuatorRepositoryPort actuatorRepositoryPort;
+    private final DeviceRepositoryPort deviceRepositoryPort;
 
     public void execute(ExecuteActuatorCommand command) {
         validateCommand(command);
 
         String normalizedAction = command.getAction().trim().toUpperCase();
+        Actuator actuator = validateDeviceAndActuator(command);
 
-        publishActuatorCommand(command.getDeviceId(), command.getActuator(), normalizedAction);
+        publishActuatorCommand(actuator.getDeviceId(), actuator.getActuador(), normalizedAction);
 
         actuatorEventRepositoryPort.save(
                 ActuatorEvent.fromManual(
-                        command.getDeviceId(),
-                        command.getActuator(),
+                        actuator.getDeviceId(),
+                        actuator.getActuador(),
                         normalizedAction
                 )
         );
+    }
+
+    private Actuator validateDeviceAndActuator(ExecuteActuatorCommand command) {
+        deviceRepositoryPort.findByDeviceId(command.getDeviceId())
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Dispositivo no encontrado: " + command.getDeviceId()
+                ));
+
+        Actuator actuator = actuatorRepositoryPort.findByDeviceIdAndActuador(
+                        command.getDeviceId(),
+                        command.getActuator()
+                )
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Actuador no encontrado para el dispositivo: " + command.getDeviceId()
+                ));
+
+        if (!actuator.isEnabled()) {
+            throw new IllegalArgumentException("Actuador deshabilitado: " + actuator.getActuatorId());
+        }
+
+        return actuator;
     }
 
     private void publishActuatorCommand(String deviceId, String actuator, String action) {
