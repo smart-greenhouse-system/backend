@@ -13,4 +13,8 @@ public interface PredictionRepositoryPort {
     Optional<Prediction> findById(String id);
 
     List<Prediction> findAll();
+
+    Optional<Prediction> findLatestImageAnalysis();
+
+    List<Prediction> findImageAnalysisHistory();
 }

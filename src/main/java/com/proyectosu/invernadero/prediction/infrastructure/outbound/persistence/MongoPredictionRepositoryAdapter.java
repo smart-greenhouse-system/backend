@@ -43,4 +43,18 @@ public class MongoPredictionRepositoryAdapter implements PredictionRepositoryPor
                 .map(predictionPersistenceMapper::toDomain)
                 .toList();
     }
+
+    @Override
+    public Optional<Prediction> findLatestImageAnalysis() {
+        return mongoPredictionRepository.findFirstByTipoOrderByCreatedAtDesc(Prediction.TYPE_IMAGE_ANALYSIS)
+                .map(predictionPersistenceMapper::toDomain);
+    }
+
+    @Override
+    public List<Prediction> findImageAnalysisHistory() {
+        return mongoPredictionRepository.findByTipoOrderByCreatedAtDesc(Prediction.TYPE_IMAGE_ANALYSIS)
+                .stream()
+                .map(predictionPersistenceMapper::toDomain)
+                .toList();
+    }
 }

@@ -3,6 +3,8 @@ package com.proyectosu.invernadero.ai.application.usecases;
 import com.proyectosu.invernadero.ai.application.command.AnalyzeImageCommand;
 import com.proyectosu.invernadero.ai.domain.model.AiImagePredictionResult;
 import com.proyectosu.invernadero.ai.domain.port.AiPredictionClientPort;
+import com.proyectosu.invernadero.prediction.application.command.SaveImageAnalysisPredictionCommand;
+import com.proyectosu.invernadero.prediction.application.usecases.SaveImageAnalysisPredictionUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,11 +13,23 @@ import lombok.extern.slf4j.Slf4j;
 public class AnalyzeImageUseCase {
 
     private final AiPredictionClientPort aiPredictionClientPort;
+    private final SaveImageAnalysisPredictionUseCase saveImageAnalysisPredictionUseCase;
 
     public AiImagePredictionResult execute(AnalyzeImageCommand command) {
         validateCommand(command);
 
         AiImagePredictionResult result = aiPredictionClientPort.predict(command.getImageBase64());
+
+        saveImageAnalysisPredictionUseCase.execute(
+                SaveImageAnalysisPredictionCommand.builder()
+                        .deviceId(command.getDeviceId())
+                        .cultivo(result.getCultivo())
+                        .success(result.isSuccess())
+                        .estadoPlanta(result.getEstadoPlanta())
+                        .confianza(result.getConfianza())
+                        .tiempoCosechaDias(result.getTiempoCosechaDias())
+                        .build()
+        );
 
         log.info(
                 "Predicción IA recibida para dispositivo [{}]: cultivo={}, estado_planta={}, confianza={}, tiempo_cosecha_dias={}",

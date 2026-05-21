@@ -4,6 +4,7 @@ import com.proyectosu.invernadero.prediction.application.command.ProcessAiPredic
 import com.proyectosu.invernadero.prediction.domain.model.Prediction;
 import com.proyectosu.invernadero.prediction.dto.request.CreatePredictionRequest;
 import com.proyectosu.invernadero.prediction.dto.response.CreatePredictionResponse;
+import com.proyectosu.invernadero.prediction.dto.response.ImageAnalysisPredictionResponse;
 import com.proyectosu.invernadero.prediction.dto.response.PredictionResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -28,6 +29,12 @@ public interface PredictionDtoMapper {
     @Mapping(target = "automaticMode", expression = "java(prediction.isAutomaticMode())")
     @Mapping(target = "executed", expression = "java(prediction.isExecuted())")
     PredictionResponse toResponse(Prediction prediction);
+
+    ImageAnalysisPredictionResponse toImageAnalysisResponse(Prediction prediction);
+
+    java.util.List<ImageAnalysisPredictionResponse> toImageAnalysisResponseList(
+            java.util.List<Prediction> predictions
+    );
 
     default Integer parseTimeAction(String timeAction) {
         if (timeAction == null || timeAction.trim().isEmpty()) {
