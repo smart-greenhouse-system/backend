@@ -1,28 +1,30 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/invernadero
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/invernadero}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
 
   mongodb:
-      uri: mongodb+srv://backend_user:Invernadero123@greenhouse-cluster.qr22rhi.mongodb.net/invernadero_db?appName=greenhouse-cluster
-
+    uri: ${MONGO_URI}
 
 jwt:
-  secret: Znfc8uGSMPo28/dDGxze38e/0WuCEsZR+gXxSBdVlXw=
+  secret: ${JWT_SECRET}
 
 mqtt:
-  url: ssl://p9471c80.ala.us-east-1.emqxsl.com:8883
-  client-id: backend-invernadero
-  username: test
-  password: test123
-  topic-in: invernadero/#
+  url: ${MQTT_URL}
+  client-id: ${MQTT_CLIENT_ID}
+  username: ${MQTT_USERNAME}
+  password: ${MQTT_PASSWORD}
+  topic-in: ${MQTT_TOPIC_IN:invernadero/#}
 
 ai:
-  base-url: http://localhost:5050
+  base-url: ${AI_BASE_URL}
 
 springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
+
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
