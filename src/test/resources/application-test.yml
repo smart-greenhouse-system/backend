@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:invernadero;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/invernadero_test
+
+mqtt:
+  url: tcp://127.0.0.1:1
+  client-id: backend-invernadero-test
+  username: test
+  password: test
+  topic-in: invernadero/#
+
+ai:
+  base-url: http://127.0.0.1:1
+
+jwt:
+  secret: test-secret-key-for-unit-tests-only-32chars-min
+  expiration: 3600000
