@@ -21,7 +21,7 @@ public class JwtServiceAdapter implements JwtServicePort {
     private final long expiration;
 
     public JwtServiceAdapter(
-            @Value("${jwt.secret}") String secret,
+            @Value("${JWT_SECRET}") String secret,
             @Value("${jwt.expiration}") long expiration
     ) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
