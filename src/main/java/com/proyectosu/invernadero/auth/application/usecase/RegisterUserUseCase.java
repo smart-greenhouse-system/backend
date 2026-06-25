@@ -41,7 +41,7 @@ public class RegisterUserUseCase {
         String encodedPassword = passwordEncoder.encode(password);
 
         User user = new User(
-                UUID.randomUUID(),
+                null,
                 email,
                 encodedPassword,
                 UserStatus.ACTIVE,

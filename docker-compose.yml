@@ -1,0 +1,69 @@
+
+services:
+
+  backend:
+    build: .
+    container_name: invernadero-backend
+
+    ports:
+      - "8080:8080"
+
+    env_file:
+      - .env
+
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      MONGO_URI: ${MONGO_URI}
+      MQTT_URL: ${MQTT_URL}
+      MQTT_CLIENT_ID: ${MQTT_CLIENT_ID}
+      MQTT_USERNAME: ${MQTT_USERNAME}
+      MQTT_PASSWORD: ${MQTT_PASSWORD}
+      MQTT_TOPIC_IN: ${MQTT_TOPIC_IN}
+      AI_BASE_URL: ${AI_BASE_URL}
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    networks:
+      - invernadero-network
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: invernadero-postgres
+
+    restart: always
+
+    env_file:
+      - .env
+
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - invernadero-network
+
+volumes:
+  postgres_data:
+
+networks:
+  invernadero-network:
+    driver: bridge
