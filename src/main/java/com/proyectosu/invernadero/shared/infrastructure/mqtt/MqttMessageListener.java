@@ -1,8 +1,10 @@
 package com.proyectosu.invernadero.shared.infrastructure.mqtt;
 
-import com.proyectosu.invernadero.shared.infrastructure.mqtt.handler.SensorNodo1MessageHandler;
-import com.proyectosu.invernadero.shared.infrastructure.mqtt.handler.SensorNodo2MessageHandler;
+import com.proyectosu.invernadero.actuator.infrastructure.inbound.mqtt.ActuatorStateMessageHandler;
+import com.proyectosu.invernadero.image.infrastructure.inbound.mqtt.ImageMessageHandler;
+import com.proyectosu.invernadero.sensor.infrastructure.inbound.mqtt.SensorMessageHandler;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
@@ -11,37 +13,39 @@ import tools.jackson.databind.ObjectMapper;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class MqttMessageListener {
 
     private final ObjectMapper objectMapper;
-    private final SensorNodo2MessageHandler sensorNodo2MessageHandler;
-    private final SensorNodo1MessageHandler sensorNodo1MessageHandler;
+    private final SensorMessageHandler sensorMessageHandler;
+    private final ImageMessageHandler imageMessageHandler;
+    private final ActuatorStateMessageHandler actuatorStateMessageHandler;
 
     @ServiceActivator(inputChannel = "mqttInputChannel")
     public void recibirMensaje(Message<?> message) {
-
+        String topic = "desconocido";
         try {
-            String topic = message.getHeaders()
-                    .get("mqtt_receivedTopic")
-                    .toString();
-
+            topic = message.getHeaders().get("mqtt_receivedTopic").toString();
             String payload = message.getPayload().toString();
 
-            JsonNode json = objectMapper.readTree(payload);
+            JsonNode json;
+            try {
+                json = objectMapper.readTree(payload);
+            } catch (Exception e) {
+                log.warn("Mensaje ignorado en el tópico [{}]. El payload no es un JSON válido: {}", topic, payload);
+                return;
+            }
 
-            if (topic.startsWith("invernadero/nodo1/sensores")) {
-
-                sensorNodo1MessageHandler.handle(topic, json);
-
-            } else if (topic.startsWith("invernadero/nodo2/sensores")) {
-
-                sensorNodo2MessageHandler.handle(topic, json);
-
+            if (sensorMessageHandler.supports(topic)) {
+                sensorMessageHandler.handle(topic, json);
+            } else if (imageMessageHandler.supports(topic)) {
+                imageMessageHandler.handle(topic, json);
+            } else if (actuatorStateMessageHandler.supports(topic)) {
+                actuatorStateMessageHandler.handle(topic, json);
             }
 
         } catch (Exception e) {
-
-            throw new RuntimeException("Error procesando mensaje MQTT", e);
+            log.error("Error inesperado procesando mensaje en el tópico: {}", topic, e);
         }
     }
 }
